@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.8.7)
-SET(PROJECT_VERSION 1.2.1)
+project(stlink C)
+# For devs: Remember to increment this each time API changes!
 SET(PROJECT_API_VERSION 1)
 SET(PROJECT_DESCRIPTION "Open source version of the STMicroelectronics Stlink Tools")
 
-project(stlink C)
 include(CheckCCompilerFlag)
 include(CheckIncludeFile)
 find_package(PkgConfig)
@@ -43,8 +43,15 @@ elseif (EXISTS ${PROJECT_SOURCE_DIR}/.version)
 	#  we can extract the package version from .version file.
 	file (STRINGS .version STLINK_PACKAGE_VERSION)
 else ()
-	set (STLINK_PACKAGE_VERSION "Unknown")
+	set (STLINK_PACKAGE_VERSION "999.9.9-Unknown")
 endif()
+
+# We shall use PROJECT_VERSION variable to set soversion stuff
+# Since these numbers will appear in .so names, e.g. libstlink.so.1.2.0
+# We can't just use STLINK_PACKAGE_VERSION here
+# (Well, we can, but that breaks all the existing conventions)
+string(REPLACE "-" ";" PROJECT_VERSION ${STLINK_PACKAGE_VERSION})
+list(GET PROJECT_VERSION 0 PROJECT_VERSION)
 
 if(WIN32)
 	find_package(7Zip REQUIRED)

@@ -1,4 +1,10 @@
-libstlink (1.2.1) unstable; urgency=low
+libstlink (2.0.0) unstable; urgency=medium
+
+  * Bump version for the next stlink release 
+
+ -- Andrew Andrianov <andrew@ncrmnt.org>  Mon, 08 Aug 2016 00:27:07 +0300
+
+libstlink (1.2.0) unstable; urgency=low
 
   * Initial Debian-Packaged Release.
 
